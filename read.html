@@ -20,9 +20,15 @@
 
     function readValue() {
         Excel.run(context => {
+            let activeSheet = context.workbook.worksheets.getActiveWorksheet();
 
-            context.workbook.worksheets.getActiveWorksheet().getRange("A1").values = context.workbook.worksheets.getItem("Constants").getRange("A1").values
-            context.workbook.worksheets.getActiveWorksheet().getRange("A2").values = [['Hello world!']];
+            let sheetConstants = context.workbook.worksheets.getItem("Constants");
+            console.log(sheetConstants);
+            
+            await context.sync();
+            
+            activeSheet.getRange("A1").values = sheetConstants.getRange("A1").values
+            activeSheet.getRange("A2").values = [['Hello world!']];
 
             return context.sync();
         });
